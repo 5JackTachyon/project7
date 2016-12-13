@@ -1,5 +1,6 @@
 var screen = document.getElementById("screen")
 var namespace = "http://www.w3.org/2000/svg"
+var click = false
 
 // utility function
 function transformPoint(event) {
@@ -37,44 +38,43 @@ function drawCircle(x, y, size, color) {
 // Step 3: Event listeners
 //document.addEventListener("mousedown", function(e) {})
 
+document.addEventListener("mousedown", function(e) {
+var selectShape = document.getElementById("shapeSelect").value
+var pt = transformPoint(e, screen)
+click = true
 
-var screen = document.getElementById("screen")
-screen.addEventListener("mousedown", function(e) {
-  var newcircle = document.createElementNS(namespace,"circle")
-  var pt = transformPoint(e, screen)
-  newcircle.setAttribute("fill", "black")
-  newcircle.setAttribute("r",5)
-  newcircle.setAttribute("cx",pt.x)
-  newcircle.setAttribute("cy",pt.y)
-  newcircle.setAttribute("opacity",1)
-  screen.appendChild(newcircle)
-  click = true
+if(selectShape == "circle"){
+  drawCircle(pt.x, pt.y, 5, "blue")
+  console.log("work?")
+}
+else if(selectShape == "square"){
+  drawSquare(pt.x, pt.y, 5, "blue")
+}
 })
-var screen = document.getElementById("screen")
-screen.addEventListener("mousemove", function(e) {
+
+document.addEventListener("mousemove", function(e) {
   if(click == true){
-  var newcircle = document.createElementNS(namespace,"circle")
-  var pt = transformPoint(e, screen)
-  newcircle.setAttribute("fill", "black")
-  newcircle.setAttribute("r",5)
-  newcircle.setAttribute("cx",pt.x)
-  newcircle.setAttribute("cy",pt.y)
-  newcircle.setAttribute("opacity",1)
-  screen.appendChild(newcircle)
+    var selectShape = document.getElementById("shapeSelect").value
+    var pt = transformPoint(e, screen)
+    if(selectShape == "circle"){
+      drawCircle(pt.x, pt.y, 5, "blue")
+    }
+    else if(selectShape == "square"){
+      drawSquare(pt.x, pt.y, 5, "blue")
+    }
   }
 })
 
-var screen = document.getElementById("screen")
-screen.addEventListener("mouseup", function(e) {
-  var newcircle = document.createElementNS(namespace,"circle")
-  var pt = transformPoint(e, screen)
-  newcircle.setAttribute("fill", "black")
-  newcircle.setAttribute("r",5)
-  newcircle.setAttribute("cx",pt.x)
-  newcircle.setAttribute("cy",pt.y)
-  newcircle.setAttribute("opacity",1)
-  screen.appendChild(newcircle)
-  click = false
+document.addEventListener("mouseup", function(e) {
+var pt = transformPoint(e, screen)
+var selectShape = document.getElementById("shapeSelect").value
+if(selectShape == "circle"){
+  drawCircle(pt.x, pt.y, 5, "blue")
+}
+else if(selectShape == "square"){
+  drawSquare(pt.x, pt.y, 5, "blue")
+}
+click = false
 })
   // what do you want to do when the user presses down
   // on the mouse button?
