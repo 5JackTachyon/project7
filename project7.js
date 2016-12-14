@@ -1,6 +1,7 @@
 var screen = document.getElementById("screen")
 var namespace = "http://www.w3.org/2000/svg"
 var click = false
+var rainbow = ["red", "orange", "yellow", "green", "blue", "purple"]
 
 // utility function
 function transformPoint(event) {
@@ -17,11 +18,11 @@ function drawSquare(x, y, size, color) {
   // square drawing code here
   var newsquare = document.createElementNS(namespace,"rect")
   var canvas = document.getElementById("screen")
-   newrect.setAttribute("fill", color)
-   newrect.setAttribute("width",size)
-   newrect.setAttribute("height",size)
-   newrect.setAttribute("x",x)
-   newrect.setAttribute("y",y)
+   newsquare.setAttribute("fill", color)
+   newsquare.setAttribute("width",size)
+   newsquare.setAttribute("height",size)
+   newsquare.setAttribute("x",x)
+   newsquare.setAttribute("y",y)
    canvas.appendChild(newsquare)
 }
 
@@ -35,32 +36,69 @@ function drawCircle(x, y, size, color) {
   canvas.appendChild(newcircle)
 }
 
+function drawTriangle(xpos, ypos, size, color) {
+  var canvas = document.getElementById("screen")
+  var pts = "" + xpos + "," + ypos + " " + (xpos + size) + "," + ypos + " " + (xpos + 0.5*size) + "," + (ypos - size)
+  console.log(pts)
+  var triangle = document.createElementNS(namespace, "polygon")
+  triangle.setAttribute("points", pts)
+  triangle.setAttribute("fill", color)
+  canvas.appendChild(triangle)
+}
+
 // Step 3: Event listeners
 //document.addEventListener("mousedown", function(e) {})
 
 document.addEventListener("mousedown", function(e) {
 var selectShape = document.getElementById("shapeSelect").value
+var colorSelect = document.getElementById("colorSelect").value
+if(colorSelect == "rainbow"){
+  for(var i = 0; i < rainbow.length; i++){
+    colorSelect += rainbow[i]
+    if(i == 5){
+      i = 0
+    }
+  }
+}
+var sizeSelect = document.getElementById("sizeSelect").value
 var pt = transformPoint(e, screen)
 click = true
 
 if(selectShape == "circle"){
-  drawCircle(pt.x, pt.y, 5, "blue")
+  drawCircle(pt.x, pt.y, sizeSelect, colorSelect)
   console.log("work?")
 }
 else if(selectShape == "square"){
-  drawSquare(pt.x, pt.y, 5, "blue")
+  drawSquare(pt.x, pt.y, sizeSelect, colorSelect)
+}
+else if(selectShape == "triangle"){
+  drawTriangle(pt.x, pt.y, sizeSelect, colorSelect)
 }
 })
 
 document.addEventListener("mousemove", function(e) {
   if(click == true){
     var selectShape = document.getElementById("shapeSelect").value
+    var colorSelect = document.getElementById("colorSelect").value
+    var colorSelect = document.getElementById("colorSelect").value
+    if(colorSelect == "rainbow"){
+      for(var i = 0; i < rainbow.length; i++){
+        colorSelect += rainbow[i]
+        if(i == 5){
+          i = 0
+        }
+      }
+    }
+    var sizeSelect = document.getElementById("sizeSelect").value
     var pt = transformPoint(e, screen)
     if(selectShape == "circle"){
-      drawCircle(pt.x, pt.y, 5, "blue")
+      drawCircle(pt.x, pt.y, sizeSelect, colorSelect)
     }
     else if(selectShape == "square"){
-      drawSquare(pt.x, pt.y, 5, "blue")
+      drawSquare(pt.x, pt.y, sizeSelect, colorSelect)
+    }
+    else if(selectShape == "triangle"){
+      drawTriangle(pt.x, pt.y, sizeSelect, colorSelect)
     }
   }
 })
@@ -68,12 +106,27 @@ document.addEventListener("mousemove", function(e) {
 document.addEventListener("mouseup", function(e) {
 var pt = transformPoint(e, screen)
 var selectShape = document.getElementById("shapeSelect").value
+var colorSelect = document.getElementById("colorSelect").value
+var colorSelect = document.getElementById("colorSelect").value
+if(colorSelect == "rainbow"){
+  for(var i = 0; i < rainbow.length; i++){
+    colorSelect += rainbow[i]
+    if(i == 5){
+      i = 0
+    }
+  }
+}
+var sizeSelect = document.getElementById("sizeSelect").value
 if(selectShape == "circle"){
-  drawCircle(pt.x, pt.y, 5, "blue")
+  drawCircle(pt.x, pt.y, sizeSelect, colorSelect)
 }
 else if(selectShape == "square"){
-  drawSquare(pt.x, pt.y, 5, "blue")
+  drawSquare(pt.x, pt.y, sizeSelect, colorSelect)
 }
+else if(selectShape == "triangle"){
+  drawTriangle(pt.x, pt.y, sizeSelect, colorSelect)
+}
+console.log("work?")
 click = false
 })
   // what do you want to do when the user presses down
