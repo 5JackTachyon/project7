@@ -2,6 +2,7 @@ var screen = document.getElementById("screen")
 var namespace = "http://www.w3.org/2000/svg"
 var click = false
 var rainbow = ["red", "orange", "yellow", "green", "blue", "purple"]
+var rainbowIndex = 0
 
 // utility function
 function transformPoint(event) {
@@ -36,6 +37,41 @@ function drawCircle(x, y, size, color) {
   canvas.appendChild(newcircle)
 }
 
+function drawEllipse(x, y, size, color) {
+  var newellipse = document.createElementNS(namespace,"ellipse")
+  var canvas = document.getElementById("screen")
+  newellipse.setAttribute("fill", color)
+  newellipse.setAttribute("rx",size)
+  newellipse.setAttribute("ry",size*3)
+  newellipse.setAttribute("cx",x)
+  newellipse.setAttribute("cy",y)
+  canvas.appendChild(newellipse)
+}
+
+function drawStartLine(x, y, size, color) {
+  var newstartline = document.createElementNS(namespace,"line")
+  var canvas = document.getElementById("screen")
+  newstartline.setAttribute("stroke", color)
+  newstartline.setAttribute("stroke-width",size)
+  newstartline.setAttribute("x1",x)
+  newstartline.setAttribute("y1",y)
+  newstartline.setAttribute("x2",x*3)
+  newstartline.setAttribute("y2",y*3)
+  canvas.appendChild(newstartline)
+}
+
+function drawLine(x, y, size, color) {
+  var newline = document.createElementNS(namespace,"line")
+  var canvas = document.getElementById("screen")
+  newline.setAttribute("stroke", color)
+  newline.setAttribute("stroke-width",size)
+  newline.setAttribute("x1",x)
+  newline.setAttribute("y1",y)
+  newline.setAttribute("x2",x*3)
+  newline.setAttribute("y2",y*3)
+  canvas.appendChild(newline)
+}
+
 function drawTriangle(xpos, ypos, size, color) {
   var canvas = document.getElementById("screen")
   var pts = "" + xpos + "," + ypos + " " + (xpos + size) + "," + ypos + " " + (xpos + 0.5*size) + "," + (ypos - size)
@@ -52,14 +88,6 @@ function drawTriangle(xpos, ypos, size, color) {
 document.addEventListener("mousedown", function(e) {
 var selectShape = document.getElementById("shapeSelect").value
 var colorSelect = document.getElementById("colorSelect").value
-if(colorSelect == "rainbow"){
-  for(var i = 0; i < rainbow.length; i++){
-    colorSelect += rainbow[i]
-    if(i == 5){
-      i = 0
-    }
-  }
-}
 var sizeSelect = document.getElementById("sizeSelect").value
 var pt = transformPoint(e, screen)
 click = true
@@ -71,8 +99,37 @@ if(selectShape == "circle"){
 else if(selectShape == "square"){
   drawSquare(pt.x, pt.y, sizeSelect, colorSelect)
 }
+else if(selectShape == "ellipse"){
+  drawEllipse(pt.x, pt.y, sizeSelect, colorSelect)
+}
+else if(selectShape == "line"){
+  drawStartLine(pt.x, pt.y, sizeSelect, colorSelect)
+}
 else if(selectShape == "triangle"){
   drawTriangle(pt.x, pt.y, sizeSelect, colorSelect)
+}
+if(colorSelect=="rainbow"){
+  if(selectShape == "circle"){
+    drawCircle(pt.x, pt.y, sizeSelect, rainbow[rainbowIndex])
+  }
+  else if(selectShape == "square"){
+    drawSquare(pt.x, pt.y, sizeSelect, rainbow[rainbowIndex])
+  }
+  else if(selectShape == "ellipse"){
+    drawEllipse(pt.x, pt.y, sizeSelect, rainbow[rainbowIndex])
+  }
+  else if(selectShape == "line"){
+    drawStartLine(pt.x, pt.y, sizeSelect, rainbow[rainbowIndex])
+  }
+  else if(selectShape == "triangle"){
+    drawTriangle(pt.x, pt.y, sizeSelect, rainbow[rainbowIndex])
+  }
+  if(rainbowIndex==rainbow.length){
+    rainbowIndex=0;
+  }
+  else{
+    rainbowIndex++;
+  }
 }
 })
 
@@ -81,14 +138,6 @@ document.addEventListener("mousemove", function(e) {
     var selectShape = document.getElementById("shapeSelect").value
     var colorSelect = document.getElementById("colorSelect").value
     var colorSelect = document.getElementById("colorSelect").value
-    if(colorSelect == "rainbow"){
-      for(var i = 0; i < rainbow.length; i++){
-        colorSelect += rainbow[i]
-        if(i == 5){
-          i = 0
-        }
-      }
-    }
     var sizeSelect = document.getElementById("sizeSelect").value
     var pt = transformPoint(e, screen)
     if(selectShape == "circle"){
@@ -97,8 +146,37 @@ document.addEventListener("mousemove", function(e) {
     else if(selectShape == "square"){
       drawSquare(pt.x, pt.y, sizeSelect, colorSelect)
     }
+    else if(selectShape == "ellipse"){
+      drawEllipse(pt.x, pt.y, sizeSelect, colorSelect)
+    }
+    else if(selectShape == "line"){
+      drawLine(pt.x, pt.y, sizeSelect, colorSelect)
+    }
     else if(selectShape == "triangle"){
       drawTriangle(pt.x, pt.y, sizeSelect, colorSelect)
+    }
+    if(colorSelect=="rainbow"){
+      if(selectShape == "circle"){
+        drawCircle(pt.x, pt.y, sizeSelect, rainbow[rainbowIndex])
+      }
+      else if(selectShape == "square"){
+        drawSquare(pt.x, pt.y, sizeSelect, rainbow[rainbowIndex])
+      }
+      else if(selectShape == "ellipse"){
+        drawEllipse(pt.x, pt.y, sizeSelect, rainbow[rainbowIndex])
+      }
+      else if(selectShape == "line"){
+        drawLine(pt.x, pt.y, sizeSelect, rainbow[rainbowIndex])
+      }
+      else if(selectShape == "triangle"){
+        drawTriangle(pt.x, pt.y, sizeSelect, rainbow[rainbowIndex])
+      }
+      if(rainbowIndex==rainbow.length){
+        rainbowIndex=0;
+      }
+      else{
+        rainbowIndex++;
+      }
     }
   }
 })
@@ -108,14 +186,6 @@ var pt = transformPoint(e, screen)
 var selectShape = document.getElementById("shapeSelect").value
 var colorSelect = document.getElementById("colorSelect").value
 var colorSelect = document.getElementById("colorSelect").value
-if(colorSelect == "rainbow"){
-  for(var i = 0; i < rainbow.length; i++){
-    colorSelect += rainbow[i]
-    if(i == 5){
-      i = 0
-    }
-  }
-}
 var sizeSelect = document.getElementById("sizeSelect").value
 if(selectShape == "circle"){
   drawCircle(pt.x, pt.y, sizeSelect, colorSelect)
@@ -123,10 +193,39 @@ if(selectShape == "circle"){
 else if(selectShape == "square"){
   drawSquare(pt.x, pt.y, sizeSelect, colorSelect)
 }
+else if(selectShape == "ellipse"){
+  drawEllipse(pt.x, pt.y, sizeSelect, colorSelect)
+}
+else if(selectShape == "line"){
+  drawLine(pt.x, pt.y, sizeSelect, colorSelect)
+}
 else if(selectShape == "triangle"){
   drawTriangle(pt.x, pt.y, sizeSelect, colorSelect)
 }
 console.log("work?")
+if(colorSelect=="rainbow"){
+  if(selectShape == "circle"){
+    drawCircle(pt.x, pt.y, sizeSelect, rainbow[rainbowIndex])
+  }
+  else if(selectShape == "square"){
+    drawSquare(pt.x, pt.y, sizeSelect, rainbow[rainbowIndex])
+  }
+  else if(selectShape == "ellipse"){
+    drawEllipse(pt.x, pt.y, sizeSelect, rainbow[rainbowIndex])
+  }
+  else if(selectShape == "line"){
+    drawLine(pt.x, pt.y, sizeSelect, rainbow[rainbowIndex])
+  }
+  else if(selectShape == "triangle"){
+    drawTriangle(pt.x, pt.y, sizeSelect, rainbow[rainbowIndex])
+  }
+  if(rainbowIndex==rainbow.length){
+    rainbowIndex=0;
+  }
+  else{
+    rainbowIndex++;
+  }
+}
 click = false
 })
   // what do you want to do when the user presses down
