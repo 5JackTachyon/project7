@@ -15,7 +15,7 @@ function transformPoint(event) {
 
 
 // Step 2: drawSquare and drawCircle functions
-function drawSquare(x, y, size, color) {
+function drawSquare(x, y, size, color, opacity) {
   // square drawing code here
   var newsquare = document.createElementNS(namespace,"rect")
   var canvas = document.getElementById("screen")
@@ -24,20 +24,22 @@ function drawSquare(x, y, size, color) {
    newsquare.setAttribute("height",size)
    newsquare.setAttribute("x",x)
    newsquare.setAttribute("y",y)
+   newsquare.setAttribute("opacity",opacity)
    canvas.appendChild(newsquare)
 }
 
-function drawCircle(x, y, size, color) {
+function drawCircle(x, y, size, color, opacity) {
   var newcircle = document.createElementNS(namespace,"circle")
   var canvas = document.getElementById("screen")
   newcircle.setAttribute("fill", color)
   newcircle.setAttribute("r",size)
   newcircle.setAttribute("cx",x)
   newcircle.setAttribute("cy",y)
+  newcircle.setAttribute("opacity",opacity)
   canvas.appendChild(newcircle)
 }
 
-function drawEllipse(x, y, size, color) {
+function drawEllipse(x, y, size, color, opacity) {
   var newellipse = document.createElementNS(namespace,"ellipse")
   var canvas = document.getElementById("screen")
   newellipse.setAttribute("fill", color)
@@ -45,10 +47,11 @@ function drawEllipse(x, y, size, color) {
   newellipse.setAttribute("ry",size*3)
   newellipse.setAttribute("cx",x)
   newellipse.setAttribute("cy",y)
+  newellipse.setAttribute("opacity",opacity)
   canvas.appendChild(newellipse)
 }
 
-function drawStartLine(x, y, size, color) {
+function drawStartLine(x, y, size, color, opacity) {
   var newstartline = document.createElementNS(namespace,"line")
   var canvas = document.getElementById("screen")
   newstartline.setAttribute("stroke", color)
@@ -57,10 +60,11 @@ function drawStartLine(x, y, size, color) {
   newstartline.setAttribute("y1",y)
   newstartline.setAttribute("x2",x*3)
   newstartline.setAttribute("y2",y*3)
+  newstartline.setAttribute("opacity",opacity)
   canvas.appendChild(newstartline)
 }
 
-function drawLine(x, y, size, color) {
+function drawLine(x, y, size, color, opacity) {
   var newline = document.createElementNS(namespace,"line")
   var canvas = document.getElementById("screen")
   newline.setAttribute("stroke", color)
@@ -69,6 +73,7 @@ function drawLine(x, y, size, color) {
   newline.setAttribute("y1",y)
   newline.setAttribute("x2",x*3)
   newline.setAttribute("y2",y*3)
+  newline.setAttribute("opacity",opacity)
   canvas.appendChild(newline)
 }
 
@@ -89,40 +94,41 @@ document.addEventListener("mousedown", function(e) {
 var selectShape = document.getElementById("shapeSelect").value
 var colorSelect = document.getElementById("colorSelect").value
 var sizeSelect = document.getElementById("sizeSelect").value
+var opacitySelect = document.getElementById("opacitySelect").value
 var pt = transformPoint(e, screen)
 click = true
 
 if(selectShape == "circle"){
-  drawCircle(pt.x, pt.y, sizeSelect, colorSelect)
+  drawCircle(pt.x, pt.y, sizeSelect, colorSelect, opacitySelect)
   console.log("work?")
 }
 else if(selectShape == "square"){
-  drawSquare(pt.x, pt.y, sizeSelect, colorSelect)
+  drawSquare(pt.x, pt.y, sizeSelect, colorSelect, opacitySelect)
 }
 else if(selectShape == "ellipse"){
-  drawEllipse(pt.x, pt.y, sizeSelect, colorSelect)
+  drawEllipse(pt.x, pt.y, sizeSelect, colorSelect, opacitySelect)
 }
 else if(selectShape == "line"){
-  drawStartLine(pt.x, pt.y, sizeSelect, colorSelect)
+  drawStartLine(pt.x, pt.y, sizeSelect, colorSelect, opacitySelect)
 }
 else if(selectShape == "triangle"){
-  drawTriangle(pt.x, pt.y, sizeSelect, colorSelect)
+  drawTriangle(pt.x, pt.y, sizeSelect, colorSelect, opacitySelect)
 }
 if(colorSelect=="rainbow"){
   if(selectShape == "circle"){
-    drawCircle(pt.x, pt.y, sizeSelect, rainbow[rainbowIndex])
+    drawCircle(pt.x, pt.y, sizeSelect, rainbow[rainbowIndex], opacitySelect)
   }
   else if(selectShape == "square"){
-    drawSquare(pt.x, pt.y, sizeSelect, rainbow[rainbowIndex])
+    drawSquare(pt.x, pt.y, sizeSelect, rainbow[rainbowIndex], opacitySelect)
   }
   else if(selectShape == "ellipse"){
-    drawEllipse(pt.x, pt.y, sizeSelect, rainbow[rainbowIndex])
+    drawEllipse(pt.x, pt.y, sizeSelect, rainbow[rainbowIndex], opacitySelect)
   }
   else if(selectShape == "line"){
-    drawStartLine(pt.x, pt.y, sizeSelect, rainbow[rainbowIndex])
+    drawStartLine(pt.x, pt.y, sizeSelect, rainbow[rainbowIndex], opacitySelect)
   }
   else if(selectShape == "triangle"){
-    drawTriangle(pt.x, pt.y, sizeSelect, rainbow[rainbowIndex])
+    drawTriangle(pt.x, pt.y, sizeSelect, rainbow[rainbowIndex], opacitySelect)
   }
   if(rainbowIndex==rainbow.length){
     rainbowIndex=0;
@@ -139,37 +145,38 @@ document.addEventListener("mousemove", function(e) {
     var colorSelect = document.getElementById("colorSelect").value
     var colorSelect = document.getElementById("colorSelect").value
     var sizeSelect = document.getElementById("sizeSelect").value
+    var opacitySelect = document.getElementById("opacitySelect").value
     var pt = transformPoint(e, screen)
     if(selectShape == "circle"){
-      drawCircle(pt.x, pt.y, sizeSelect, colorSelect)
+      drawCircle(pt.x, pt.y, sizeSelect, colorSelect, opacitySelect)
     }
     else if(selectShape == "square"){
-      drawSquare(pt.x, pt.y, sizeSelect, colorSelect)
+      drawSquare(pt.x, pt.y, sizeSelect, colorSelect, opacitySelect)
     }
     else if(selectShape == "ellipse"){
-      drawEllipse(pt.x, pt.y, sizeSelect, colorSelect)
+      drawEllipse(pt.x, pt.y, sizeSelect, colorSelect, opacitySelect)
     }
     else if(selectShape == "line"){
-      drawLine(pt.x, pt.y, sizeSelect, colorSelect)
+      drawLine(pt.x, pt.y, sizeSelect, colorSelect, opacitySelect)
     }
     else if(selectShape == "triangle"){
-      drawTriangle(pt.x, pt.y, sizeSelect, colorSelect)
+      drawTriangle(pt.x, pt.y, sizeSelect, colorSelect, opacitySelect)
     }
     if(colorSelect=="rainbow"){
       if(selectShape == "circle"){
-        drawCircle(pt.x, pt.y, sizeSelect, rainbow[rainbowIndex])
+        drawCircle(pt.x, pt.y, sizeSelect, rainbow[rainbowIndex], opacitySelect)
       }
       else if(selectShape == "square"){
-        drawSquare(pt.x, pt.y, sizeSelect, rainbow[rainbowIndex])
+        drawSquare(pt.x, pt.y, sizeSelect, rainbow[rainbowIndex], opacitySelect)
       }
       else if(selectShape == "ellipse"){
-        drawEllipse(pt.x, pt.y, sizeSelect, rainbow[rainbowIndex])
+        drawEllipse(pt.x, pt.y, sizeSelect, rainbow[rainbowIndex], opacitySelect)
       }
       else if(selectShape == "line"){
-        drawLine(pt.x, pt.y, sizeSelect, rainbow[rainbowIndex])
+        drawLine(pt.x, pt.y, sizeSelect, rainbow[rainbowIndex], opacitySelect)
       }
       else if(selectShape == "triangle"){
-        drawTriangle(pt.x, pt.y, sizeSelect, rainbow[rainbowIndex])
+        drawTriangle(pt.x, pt.y, sizeSelect, rainbow[rainbowIndex], opacitySelect)
       }
       if(rainbowIndex==rainbow.length){
         rainbowIndex=0;
@@ -187,37 +194,38 @@ var selectShape = document.getElementById("shapeSelect").value
 var colorSelect = document.getElementById("colorSelect").value
 var colorSelect = document.getElementById("colorSelect").value
 var sizeSelect = document.getElementById("sizeSelect").value
+var opacitySelect = document.getElementById("opacitySelect").value
 if(selectShape == "circle"){
-  drawCircle(pt.x, pt.y, sizeSelect, colorSelect)
+  drawCircle(pt.x, pt.y, sizeSelect, colorSelect, opacitySelect)
 }
 else if(selectShape == "square"){
-  drawSquare(pt.x, pt.y, sizeSelect, colorSelect)
+  drawSquare(pt.x, pt.y, sizeSelect, colorSelect, opacitySelect)
 }
 else if(selectShape == "ellipse"){
-  drawEllipse(pt.x, pt.y, sizeSelect, colorSelect)
+  drawEllipse(pt.x, pt.y, sizeSelect, colorSelect, opacitySelect)
 }
 else if(selectShape == "line"){
-  drawLine(pt.x, pt.y, sizeSelect, colorSelect)
+  drawLine(pt.x, pt.y, sizeSelect, colorSelect, opacitySelect)
 }
 else if(selectShape == "triangle"){
-  drawTriangle(pt.x, pt.y, sizeSelect, colorSelect)
+  drawTriangle(pt.x, pt.y, sizeSelect, colorSelect, opacitySelect)
 }
 console.log("work?")
 if(colorSelect=="rainbow"){
   if(selectShape == "circle"){
-    drawCircle(pt.x, pt.y, sizeSelect, rainbow[rainbowIndex])
+    drawCircle(pt.x, pt.y, sizeSelect, rainbow[rainbowIndex], opacitySelect)
   }
   else if(selectShape == "square"){
-    drawSquare(pt.x, pt.y, sizeSelect, rainbow[rainbowIndex])
+    drawSquare(pt.x, pt.y, sizeSelect, rainbow[rainbowIndex], opacitySelect)
   }
   else if(selectShape == "ellipse"){
-    drawEllipse(pt.x, pt.y, sizeSelect, rainbow[rainbowIndex])
+    drawEllipse(pt.x, pt.y, sizeSelect, rainbow[rainbowIndex], opacitySelect)
   }
   else if(selectShape == "line"){
-    drawLine(pt.x, pt.y, sizeSelect, rainbow[rainbowIndex])
+    drawLine(pt.x, pt.y, sizeSelect, rainbow[rainbowIndex], opacitySelect)
   }
   else if(selectShape == "triangle"){
-    drawTriangle(pt.x, pt.y, sizeSelect, rainbow[rainbowIndex])
+    drawTriangle(pt.x, pt.y, sizeSelect, rainbow[rainbowIndex], opacitySelect)
   }
   if(rainbowIndex==rainbow.length){
     rainbowIndex=0;
